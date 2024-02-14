@@ -26,7 +26,7 @@ long_description = read_file(("README.md",))
 setup(
     name="comm",
     version='0.1.0',
-    url="https://github.com/mauceri/amicus-plugin-test",
+    url="https://github.com/mauceri/mandata-amici",
     description="Un robot qui vous veut du bien",
     packages=find_packages(),
     install_requires=[
