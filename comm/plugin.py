@@ -21,10 +21,10 @@ class Plugin(IPlugin):
     def __init__(self,observable:IObservable):
         self.__observable = observable
         self.load = Load(self.__observable)
-        logger.info(f"********************** Observateur créé {self.echo.prefix()}")
+        logger.info(f"********************** Observateur créé {self.load.prefix()}")
         
     def start(self):
-        logger.info(f"********************** Inscripton de {self.echo.prefix()}")
+        logger.info(f"********************** Inscripton de {self.load.prefix()}")
         self.__observable.subscribe(self.load)
 
     async def stop(self):
