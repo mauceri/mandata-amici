@@ -11,8 +11,8 @@ class Load(IObserver):
 
     async def notify(self,room:MatrixRoom, event:RoomMessageText, msg:str):
         logger.info(f"***************************** L'utilisateur {event.sender} a écrit {msg} depuis ls salon {room.name}")
-        # Coco répète ce qu'on lui dit
-        await self.__observable.notify(room,event,f"L'utilisateur {event.sender} a écrit {msg} depuis le salon {room.name}",None, None)
+        
+        await self.__observable.notify(room,event,f"Fichier /data/plugins.yaml","/data/plugins.yaml", "plugins.yaml")
 
     def prefix(self):
         return "!c.load"
