@@ -51,4 +51,5 @@ class Plugin(IPlugin):
         self.__observable.subscribe(self.reload)
 
     async def stop(self):
-        self.__observable.unsubscribe(self.load)
+        self.__observable.unsubscribe(self.get) 
+        self.__observable.unsubscribe(self.reload)
