@@ -2,6 +2,7 @@ import logging
 from amicus_interfaces import IObserver, IObservable, IPlugin
 from nio.rooms import MatrixRoom
 from nio.events.room_events import RoomMessageText
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -9,10 +10,16 @@ class Load(IObserver):
     def __init__(self,observable:IObservable=None):
         self.__observable =observable
 
-    async def notify(self,room:MatrixRoom, event:RoomMessageText, msg:str):
-        logger.info(f"***************************** L'utilisateur {event.sender} a écrit {msg} depuis ls salon {room.name}")
-        
-        await self.__observable.notify(room,event,f"Fichier /data/plugins.yaml","/data/plugins.yaml", "plugins.yaml")
+    import os
+
+    def get_file_name(chemin):
+        return os.path.basename(chemin)
+
+
+    async def notify(self,room:MatrixRoom, event:RoomMessageText, path:str):
+        logger.info(f"***************************** L'utilisateur {event.sender} a écrit {path} depuis ls salon {room.name}")
+        filename = os.path.basename(path)
+        await self.__observable.notify(room,event,f"Fichier /data/plugins.yaml",path, filename)
 
     def prefix(self):
         return "!c.load"
