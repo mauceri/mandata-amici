@@ -19,7 +19,7 @@ class Load(IObserver):
     async def notify(self,room:MatrixRoom, event:RoomMessageText, path:str):
         logger.info(f"***************************** L'utilisateur {event.sender} a écrit {path} depuis ls salon {room.name}")
         filename = os.path.basename(path)
-        await self.__observable.notify(room,event,f"Fichier /data/plugins.yaml",path, filename)
+        await self.__observable.notify(room,event,f"Fichier {path}",path, filename)
 
     def prefix(self):
         return "!c.load"
