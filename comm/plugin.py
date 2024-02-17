@@ -3,8 +3,26 @@ from amicus_interfaces import IObserver, IObservable, IPlugin
 from nio.rooms import MatrixRoom
 from nio.events.room_events import RoomMessageText
 import os
+import subprocess
 
 logger = logging.getLogger(__name__)
+
+class Shell(IObserver):
+    def __init__(self,observable:IObservable=None):
+        self.__observable =observable
+
+    def get_file_name(chemin):
+        return os.path.basename(chemin)
+
+
+    async def notify(self,room:MatrixRoom, event:RoomMessageText, command:str):
+        logger.info(f"***************************** L'utilisateur {event.sender} veut exécuter lacommande  {command} depuis ls salon {room.name}")
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+        await self.__observable.notify(room,event,result.stdout)
+
+    def prefix(self):
+        return "!c.shell"
 
 class Get(IObserver):
     def __init__(self,observable:IObservable=None):
