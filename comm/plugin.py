@@ -57,17 +57,22 @@ class Reload(IObserver):
 class Plugin(IPlugin):
     def __init__(self,observable:IObservable):
         self.__observable = observable
+        self.shell = Shell(self.__observable)
+        logger.info(f"********************** Observateur créé {self.shell.prefix()}")
         self.get = Get(self.__observable)
         logger.info(f"********************** Observateur créé {self.get.prefix()}")
         self.reload = Reload(self.__observable)
         logger.info(f"********************** Observateur créé {self.reload.prefix()}")
         
     def start(self):
+        logger.info(f"********************** Inscripton de {self.shell.prefix()}")
+        self.__observable.subscribe(self.shell)
         logger.info(f"********************** Inscripton de {self.get.prefix()}")
         self.__observable.subscribe(self.get)
         logger.info(f"********************** Inscripton de {self.reload.prefix()}")
         self.__observable.subscribe(self.reload)
 
     async def stop(self):
+        self.__observable.unsubscribe(self.shell) 
         self.__observable.unsubscribe(self.get) 
         self.__observable.unsubscribe(self.reload)
